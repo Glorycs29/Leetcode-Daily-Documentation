@@ -17,18 +17,25 @@ class Solution {
             return true;
         }
         
+        // special case :
+        // arr[] = {3, 1, 2, 3, 3, 3, 3}
+        
         if(arr[mid] == arr[low] && arr[mid] == arr[high]){
             low++;
             high--;
         }
         
+        // trimming right if left is sorted
         if(arr[mid] >= arr[low]){
             if(arr[low] <= target && arr[mid] >= target){
                 high = mid-1;
             }else{
                 low = mid+1;
             }
-        }else{
+        }
+        
+        // trimming left if right is sorted
+        else{
             if(arr[mid] <= target && arr[high] >= target){
                 low = mid+1;
             }else{
