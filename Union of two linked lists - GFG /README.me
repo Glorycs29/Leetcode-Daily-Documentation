@@ -1,0 +1,148 @@
+Union of Two Linked Lists✅✅
+---------------------------------
+This problem is really interesting and can be solved by doing a slight modification in mergeSort Algorithm. In this article I've explained the approach.I hope you will like it !! 
+
+[ Note:- pasting the code in all languages will make the article longer. So I've provided the link for c++, Java and python code. ]
+
+ 
+
+Let's start with the Problem Statement:-
+
+ 
+
+Problem Statement❓
+The problem says that, we are given two Linked Lists and our task is to make union of the given lists in such a way that we have distinct elements only and resultant list is sorted.
+
+Example:
+
+Input:    L1 = 1->2->2->5->7,    L2 = 2->5->8
+
+distinct elements: (5,7,2,3,8,1)
+
+Elements after sorting: (1 2 3 5 7 8)
+
+OUTPUT:  1->2->3->5->7->8
+
+ 
+
+ 
+SOLUTION🤔
+Looking at the problem, first approach that will come to your mind is quite similar to the one I've explained in the problem statement.
+
+In order to get the distinct elements we can use a HashSet.
+
+After this, we can sort the elements and then we can form a linked list out of those elements.
+
+ 
+
+The problem with this approach is, we are storing the elements somewhere and then sorting the elements.
+
+ 
+
+However, we can modify the sorting function to solve the problem.
+
+ 
+
+Solution Using Modified Sort Function👈
+The problem asks us to return the union of lists in sorted order. So we can follow below steps to solve the problem:
+
+ 
+
+Step 1: - Merge the given two lists.
+
+Step 2: - Sort the merged List
+
+Step 3: - Remove Duplicate elements from the final List.
+
+ 
+
+Now, the question is: which sorting technique to use in order to sort the list❓
+
+When we talk about sorting efficiently, then we have two popular sorting techniques Merge Sort and Quick Sort. But I would like to use the Merge Sort. Below is the reason:- 
+
+ 
+
+-------------------------------------------------
+
+REASON FOR USING MERGE SORT:
+
+1. Merge Sort Technique uses a merge function to combine lists. So we don't need to write an explicit function for STEP 1.
+
+2. While merging the Elements of two lists, we can handle duplicate elements by adding a simple condition.
+
+ ---------------------------------------------
+
+ 
+
+Thus, by using a merge sort, we can solve the whole problem by performing sorting in a modified manner.
+
+ 
+
+ 
+Pseudo Code📝
+Below is the modified merge function. You can notice how this function handles the duplicate elements while merge the lists.
+
+function merge(List a, List b)  
+{
+      if( list a is null ) return list b
+      if(list b is null ) return list a
+
+       List ans = null
+
+      if(a.data<b.data) // add a node to answer
+      {
+          ans=a
+          ans.next=merge(a.next,b)
+      }
+      else if(b.data<a.data) // add b node to answer
+      {
+          ans=b
+          ans.next=merge(a,b.next)
+      }
+      else     //This is important to handle duplicate elements
+      {
+          ans=b // you can write a or b(any)
+          ans.next=merge(a.next,b.next)  //move both pointers.
+      }
+
+               return ans
+}
+Below is the simple mergeSort function for Linked Lists.
+
+function mergeSort(List head)
+{
+        //while splitting, we stop when we are left with single element.
+        if (head is null or head.next is null) 
+                           return head
+         
+        //split from middle.
+        middle=findMiddle(head)
+        nextToMiddle=middle.next
+      
+        //break the list from middle point to split into two parts.
+        middle.next=null 
+
+        first=mergeSort(head)
+        second=mergeSort(nextToMiddle)
+
+
+        sorted=merge(first,second)
+    
+                return sorted
+}
+ 
+
+ 
+
+COMPLEXITY⌛⌛:
+---------------------------------------------
+
+complexity will be same as of merge sort
+
+Time Complexity: O((m+n)log(m+n))
+Space Complexity: O(n) //recursion stack space
+---------------------------------------------------
+
+ 
+
+ 
