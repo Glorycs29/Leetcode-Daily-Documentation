@@ -30,8 +30,7 @@ s and goal consist of lowercase letters
 
 
 # Approach
-# My gif
-![gif](https://github.com/Glorycs29/Leetcode-Daily-Documentation/commit/30f65fa18037c063d890fdfc599ecc3043b2156d)
+![!](https://github.com/Glorycs29/Leetcode-Daily-Documentation/commit/30f65fa18037c063d890fdfc599ecc3043b2156d)
 ## The approach of the code is as follows:
 
 - First, the code checks if the lengths of the two input strings, s, and goal, are not equal or if the length of s is less than or equal to 1. If either of these conditions is true, the function returns false. This is because for the two strings to be buddy strings, they must have the same length and contain at least two differing characters.
