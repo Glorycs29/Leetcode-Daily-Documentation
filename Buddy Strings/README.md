@@ -30,10 +30,10 @@ s and goal consist of lowercase letters
 
 
 # Approach
-![]()
+![](https://github.com/Glorycs29/Leetcode-Daily-Documentation/commit/30f65fa18037c063d890fdfc599ecc3043b2156d)
 The approach of the code is as follows:
 
-- First, the code checks if the lengths of the two input strings, s and goal, are not equal or if the length of s is less than or equal to 1. If either of these conditions is true, the function returns false. This is because for the two strings to be buddy strings, they must have the same length and contain at least two differing characters.
+- First, the code checks if the lengths of the two input strings, s, and goal, are not equal or if the length of s is less than or equal to 1. If either of these conditions is true, the function returns false. This is because for the two strings to be buddy strings, they must have the same length and contain at least two differing characters.
 
 - Next, the code checks if s and goal are identical. If they are, it means that all characters are the same. In this case, the code creates an set, distinctChars, to store the distinct characters from s. If the size of distinctChars is less than the length of s, it means there are duplicate characters, and we can swap two of them to make s and goal equal. The function returns true in this case.
 
