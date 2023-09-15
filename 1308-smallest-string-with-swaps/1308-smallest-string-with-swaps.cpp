@@ -1,63 +1,83 @@
-class DSU{
-private:
+static const int _ = [](){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return 0;
+}();
 
-    int *parent;
-    int *size;
-
-public:
-
-    DSU(int v){
-        size = new int[v];
-        parent = new int[v];
-        for(int i = 0; i < v; i++){
-            parent[i] = i;
-            size[i] = 1;
+class UnionFind{
+    private:
+        vector<int> _p, _s;
+    public:
+        UnionFind(int n): _p(n), _s(n){
+            for(int i = 0; i < n; i++){
+                _p[i] = i;
+                _s[i] = 1;
+            }
         }
-    }
 
-    int Find(int node){
-        if(parent[node] != node){
-            return parent[node] = Find(parent[node]); // path compression step.
+        int Find(int x){
+            if(x==_p[x]){
+                return x;
+            }
+            return _p[x] = Find(_p[x]);
         }
-        return node;
-    }
 
-    void Union(int u,int v){
-        int up = Find(u);
-        int vp = Find(v);
-        if(up == vp) return;
-        if(size[up] < size[vp]){
-            parent[up] = vp;
-            size[vp] += size[up];
+        bool Union(int x, int y){
+            int px = Find(x);
+            int py = Find(y);
+            if(px == py)
+                return false;
+            if(_s[px]>_s[py]){
+                _p[py] = px;
+                _s[px]+=_s[py]; 
+            }
+            else{
+                _p[px] = py;
+                _s[py]+=_s[px];
+            }
+            return true;
         }
-        else{
-            parent[vp] = up;
-            size[up] += size[vp];
-        }
-    }
+        void print(){
+            cout << "_p: ";
+            for(auto& p : _p){
+                cout << p << " ";
+            }
+            cout << endl;
 
+            cout << "_s: ";
+            for(auto& s : _s){
+                cout << s << " ";
+            }
+            cout << endl;
+        
+        }
 };
-
-
-
 
 class Solution {
 public:
     string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
-        DSU dsu(s.size());
-        for(auto p : pairs){
-            dsu.Union(p[0], p[1]);
+        
+        UnionFind ufs(s.size());
+        //ufs.print();
+        for(auto& p : pairs){
+            ufs.Union(p[0], p[1]);
+            //ufs.print();
         }
-        map<int, multiset<char>> mp;
-        for(int i=0; i<s.size(); i++){
-            mp[dsu.Find(i)].insert(s[i]);
+        unordered_map<int, vector<int>> mp;
+        for(int i = 0; i < s.size(); i++){
+            mp[ufs.Find(i)].push_back(i);
         }
-
-        for(int i=0; i<s.size(); i++){
-            auto it = mp[dsu.Find(i)].begin();
-            s[i] = *it;
-            mp[dsu.Find(i)].erase(it);
+        for(auto& [k, v] : mp){
+            string ss;
+            for(auto& i : v){
+                ss.push_back(s[i]);
+            }
+            sort(ss.begin(), ss.end());
+            for(int i = 0; i < v.size(); i++){
+                s[v[i]] = ss[i];
+            }
         }
-        return s;
+        return s; 
     }
 };
