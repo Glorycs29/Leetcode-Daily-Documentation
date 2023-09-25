@@ -1,15 +1,14 @@
 class Solution {
 public:
     int divisorSubstrings(int num, int k) {
-        int count=0;
-        long power = pow(10,k);
-        
-        for(int n=num; n>0; n/=10){
-            int divisor = n % power;
-            if(divisor != 0 && num % divisor == 0) count++;
+        const string s = to_string(num);
+        int answer = 0;
 
-            if(n/power == 0) break;
+        for(int i = 0;i + k <= s.length();i ++) {
+            int x = stoi(s.substr(i, k));
+            if(x != 0 && num % x == 0)
+                answer ++;
         }
-        return count;
+        return answer;
     }
 };
