@@ -1,13 +1,29 @@
 class Solution {
 public:
+    // let's use top-down approach(memoization)
+    vector<int> dp;
+
     int integerBreak(int n) {
-        if(n==2 || n==3) return (n-1);
-        // if n is still greater than 4 then, take out the size of 3 out
-        int res=1;
-        while(n>4){
-            n-=3;
-            res*=3;
+        if(n<=3)
+            return n-1;
+        dp = vector(n+1,0);
+        return intBreak(n);
+    }
+    
+    int intBreak(int num){
+        if(num<=3){
+            return num;
         }
-        return (n*res);
+
+        if(dp[num]!=0){
+            return dp[num];
+        }
+
+        int ans = num;
+        for(int i=2; i<num; i++){
+            ans = max(ans, i*intBreak(num-i));
+        }
+        dp[num] = ans;
+        return ans;
     }
 };
