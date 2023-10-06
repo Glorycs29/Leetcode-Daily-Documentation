@@ -1,29 +1,26 @@
 class Solution {
 public:
-    // let's use top-down approach(memoization)
-    vector<int> dp;
-
     int integerBreak(int n) {
-        if(n<=3)
-            return n-1;
-        dp = vector(n+1,0);
-        return intBreak(n);
-    }
-    
-    int intBreak(int num){
-        if(num<=3){
-            return num;
+        if (n <= 3) {
+            return n - 1;
         }
+        
+        vector<int> dp(n + 1, 0);
 
-        if(dp[num]!=0){
-            return dp[num];
+        // Set base cases
+        for (int i = 1; i <= 3; i++) {
+            dp[i] = i;
         }
-
-        int ans = num;
-        for(int i=2; i<num; i++){
-            ans = max(ans, i*intBreak(num-i));
+        
+        for (int num = 4; num <= n; num++) {
+            int ans = num;
+            for (int i = 2; i < num; i++) {
+                ans = max(ans, i * dp[num - i]);
+            }
+            
+            dp[num] = ans;
         }
-        dp[num] = ans;
-        return ans;
+        
+        return dp[n];
     }
 };
