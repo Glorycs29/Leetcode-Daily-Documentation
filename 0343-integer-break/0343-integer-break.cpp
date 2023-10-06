@@ -5,22 +5,14 @@ public:
             return n - 1;
         }
         
-        vector<int> dp(n + 1, 0);
-
-        // Set base cases
-        for (int i = 1; i <= 3; i++) {
-            dp[i] = i;
+        if (n % 3 == 0) {
+            return pow(3, n / 3);
         }
         
-        for (int num = 4; num <= n; num++) {
-            int ans = num;
-            for (int i = 2; i < num; i++) {
-                ans = max(ans, i * dp[num - i]);
-            }
-            
-            dp[num] = ans;
+        if (n % 3 == 1) {
+            return pow(3, n / 3 - 1) * 4;
         }
         
-        return dp[n];
+        return pow(3, n / 3) * 2;
     }
 };
