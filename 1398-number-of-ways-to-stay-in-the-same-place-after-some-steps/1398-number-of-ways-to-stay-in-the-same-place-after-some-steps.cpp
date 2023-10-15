@@ -1,25 +1,28 @@
 class Solution {
 public:
     int numWays(int steps, int arrLen) {
-        int m = steps;
-        int n = min(steps / 2 + 1, arrLen);
+        const int MOD = 1000000007;
+        std::vector<std::vector<long long>> memo(steps + 1, std::vector<long long>(std::min(arrLen, steps) + 1, -1));
         
-        vector<vector<int>> dp(m + 1, vector<int>(n, 0));
-        dp[0][0] = 1;
-        
-        int mod = 1000000007; 
-        for (int i = 1; i <= m; i++) {
-            for (int j = 0; j < n; j++) {
-                dp[i][j] = dp[i - 1][j];
-                if (j > 0) {
-                    dp[i][j] = (dp[i][j] + dp[i - 1][j - 1]) % mod;
-                }
-                if (j < n - 1) {
-                    dp[i][j] = (dp[i][j] + dp[i - 1][j + 1]) % mod;
-                }
-            }
+        return dp(steps, 0, arrLen, MOD, memo);
+    }
+    
+    long long dp(int step, int index, int arrLen, const int MOD, std::vector<std::vector<long long>>& memo) {
+        if (step == 0) {
+            return (index == 0) ? 1 : 0;
+        }
+        if (step < 0 || index < 0 || index >= arrLen) {
+            return 0;
+        }
+        if (memo[step][index] != -1) {
+            return memo[step][index];
         }
         
-        return dp[m][0];
+        long long ways = dp(step - 1, index, arrLen, MOD, memo) % MOD;
+        ways += dp(step - 1, index - 1, arrLen, MOD, memo) % MOD;
+        ways += dp(step - 1, index + 1, arrLen, MOD, memo) % MOD;
+        
+        memo[step][index] = ways % MOD;
+        return ways % MOD;
     }
 };
